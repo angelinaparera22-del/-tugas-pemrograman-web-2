@@ -1,15 +1,10 @@
 <?php
 
+use App\Http\Controllers\SepatuController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::get('produk-sepatu', function () {
-    return view('produk-sepatu.index',['title' => 'Produk Sepatu']);
-});
-
-Route::get('produk-sepatu/create', function () {
-    return view('produk-sepatu.create',['title' => 'Create Produk Sepatu']);
-});
+Route::get('/produk-sepatu', [SepatuController::class, 'index']);
+Route::get('/produk-sepatu/create', [SepatuController::class, 'create']);
