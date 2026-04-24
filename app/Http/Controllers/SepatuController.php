@@ -13,7 +13,11 @@ class SepatuController extends Controller
     public function index()
     {
         
-        return view('produk-sepatu.index',['title' => 'Produk Sepatu']);
+        return view('produk-sepatu.index',[
+            'title' => 'Produk Sepatu', 
+            'sepatus' => Sepatu::all(),
+            
+            ]);
 
     }
 
