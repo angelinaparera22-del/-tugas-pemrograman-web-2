@@ -20,7 +20,7 @@ class SepatuFactory extends Factory
         return [
             'name' => fake()->name(),
             'brand' => fake()->name(),
-            'size' => fake()->numery('##'),
+            'size' => fake()->numerify('##'),
             'price' => fake()->name(),
             'stock' => fake()->name(),
         ];  

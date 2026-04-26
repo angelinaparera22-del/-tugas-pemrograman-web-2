@@ -12,7 +12,7 @@ class sepatu extends Model
     /** @use HasFactory<\Database\Factories\SepatuFactory> */
     use HasFactory;
     
-    //protected $fillable = ['name', 'brand', 'size', 'price', 'stock'];
+    protected $fillable = ['name', 'brand', 'size', 'price', 'stock'];
 
-    //protected $guarded = ['id'];
+    protected $guarded = ['id'];
 }
