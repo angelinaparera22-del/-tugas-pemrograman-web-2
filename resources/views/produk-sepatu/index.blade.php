@@ -19,9 +19,11 @@
                 {{ $sepatu->name }} --
                 {{ $sepatu->brand }} --
                 {{ $sepatu->size }} --
-                {{ $sepatu->price }} -- 
+                {{ $sepatu->price }} --
                 {{ $sepatu->stock }}
-
+                <a href="{{ route('produk-sepatu.edit', $sepatu) }}" class="btn btn-warning">
+                    Edit
+                </a>
             </li>
         @endforeach
     </ul>

@@ -68,7 +68,12 @@ class SepatuController extends Controller
      */
     public function edit(sepatu $sepatu)
     {
-        //
+       return view('produk-sepatu.edit',[
+            'title' => 'Edit produk', 
+            'sepatu' => $sepatu
+            
+            ]);
+
     }
 
     /**
@@ -76,7 +81,24 @@ class SepatuController extends Controller
      */
     public function update(Request $request, sepatu $sepatu)
     {
-        //
+        $validated = $request->validate([
+        'name' => 'required|max:255',
+        'brand' => 'required|max:255',
+        'size' => 'required|numeric',
+        'price' => 'required|numeric',
+        'stock' => 'required|numeric',
+    ], [
+        
+        'name.required' => 'Nama wajib diisi',
+        'brand.required' => 'Brand wajib diisi',
+        'size.required' => 'Size wajib diisi',
+        'price.required' => 'Price wajib diisi',
+        'stock.required' => 'Stock wajib diisi',
+    ]);
+
+    $sepatu->update($validated);
+
+    return redirect()->route('produk-sepatu.index')->with('success', 'Data berhasil diubah');
     }
 
     /**
