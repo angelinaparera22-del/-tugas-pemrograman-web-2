@@ -24,6 +24,12 @@
                 <a href="{{ route('produk-sepatu.edit', $sepatu) }}" class="btn btn-warning">
                     Edit
                 </a>
+                <form action="{{ route('produk-sepatu.destroy', $sepatu) }}" method="POST" class="d-inline">
+                    @method('DELETE')
+                    @csrf
+                    <button type="submit" class="btn btn-danger"
+                        onclick="return confirm('ANDA YAKIN?')">Delete</button>
+                </form>
             </li>
         @endforeach
     </ul>

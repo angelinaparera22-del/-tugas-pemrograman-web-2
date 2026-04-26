@@ -106,6 +106,7 @@ class SepatuController extends Controller
      */
     public function destroy(sepatu $sepatu)
     {
-        //
+        $sepatu->delete($sepatu);
+        return redirect()->route('produk-sepatu.index')->with('success', 'Data berhasil dihapus');
     }
 }
