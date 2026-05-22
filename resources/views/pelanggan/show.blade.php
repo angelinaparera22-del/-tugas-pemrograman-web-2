@@ -14,7 +14,7 @@
         </li>
     </ul>
 
-    <a href="{{ route('pelanggan.index') }}" class="btn btn-secondary">Cancel</a>
+    <a href="{{ route('pelanggan.index') }}" class="btn btn-secondary">Kembali</a>
     <a href="{{ route('pelanggan.edit', $pelanggan->id) }}" class="btn btn-warning">Edit</a>
     <form action="{{ route('pelanggan.destroy', $pelanggan->id) }}" method="POST" class="d-inline">
         @csrf

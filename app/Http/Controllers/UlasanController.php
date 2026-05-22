@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pelanggan;
 use App\Models\Ulasan;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,24 @@ class UlasanController extends Controller
      */
     public function index()
     {
-        //
+{
+    $keyword = request('keyword');
+
+    $ulasans = Ulasan::with('pelanggan')->latest();
+
+    if ($keyword) {
+        $ulasans->whereHas('pelanggan', function($query) use ($keyword) {
+            $query->where('nama_pelanggan', 'like', "%{$keyword}%");
+        })
+        ->orWhere('isi_ulasan', 'like', "%{$keyword}%");
+    }
+
+    return view('ulasan.index', [
+        'title' => 'Ulasan',
+        'ulasans' => $ulasans->paginate(5)->withQueryString(),
+    ]);
+}
+
     }
 
     /**

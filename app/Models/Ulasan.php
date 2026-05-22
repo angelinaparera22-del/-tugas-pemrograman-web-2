@@ -2,20 +2,26 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Builder;
 
-#[Fillable(['name', 'pelanggan_id'])]
+#[Fillable(['pelanggan_id', 'isi_ulasan', 'rating'])]
 
 class Ulasan extends Model
 {
-    /** @use HasFactory<\Database\Factories\UlasanFactory> */
     use HasFactory;
 
-     public function pelanggan(): BelongsTo
+    // otomatis load relasi pelanggan
+    protected $with = ['pelanggan'];
+
+    public function pelanggan(): BelongsTo
     {
         return $this->belongsTo(Pelanggan::class);
     }
+
+
 }

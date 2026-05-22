@@ -18,11 +18,11 @@ class PelangganController extends Controller
     if($keyword) {
         $pelanggans->where('nama_pelanggan', 'like', '%'. $keyword . '%');
     }
-          
+
         return view('pelanggan.index',[
             'title' => 'Pelanggan', 
             'pelanggans' => $pelanggans->paginate(5)->withQueryString(),
-            
+
             ]);
     }
 
@@ -57,6 +57,7 @@ class PelangganController extends Controller
      */
     public function show(Pelanggan $pelanggan)
     {
+        //
          return view('pelanggan.show', [
         'title' => 'Detail Pelanggan',
         'pelanggan' => $pelanggan
