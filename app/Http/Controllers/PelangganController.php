@@ -12,7 +12,18 @@ class PelangganController extends Controller
      */
     public function index()
     {
-        //
+
+    $pelanggans = Pelanggan::latest();
+    $keyword = request('keyword');
+    if($keyword) {
+        $pelanggans->where('nama_pelanggan', 'like', '%'. $keyword . '%');
+    }
+          
+        return view('pelanggan.index',[
+            'title' => 'Pelanggan', 
+            'pelanggans' => $pelanggans->paginate(5)->withQueryString(),
+            
+            ]);
     }
 
     /**
