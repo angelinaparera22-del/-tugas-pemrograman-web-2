@@ -65,7 +65,10 @@ class PelangganController extends Controller
      */
     public function edit(Pelanggan $pelanggan)
     {
-        //
+        return view('pelanggan.edit', [
+        'title' => 'Edit Pelanggan',
+        'pelanggan' => $pelanggan
+    ]);
     }
 
     /**
@@ -73,7 +76,15 @@ class PelangganController extends Controller
      */
     public function update(Request $request, Pelanggan $pelanggan)
     {
-        //
+        $validated = $request->validate([
+        'nama_pelanggan' => 'required|string|max:255',
+        'alamat' => 'required|string',
+        'nomor_telepon' => 'required|string|max:20',
+    ]);
+
+    $pelanggan->update($validated);
+
+    return redirect()->route('pelanggan.index')->with('success', 'Data pelanggan berhasil diubah!');
     }
 
     /**
