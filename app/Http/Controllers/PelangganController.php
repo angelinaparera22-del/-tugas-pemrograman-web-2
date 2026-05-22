@@ -31,7 +31,9 @@ class PelangganController extends Controller
      */
     public function create()
     {
-        //
+         return view('pelanggan.create', [
+        'title' => 'Tambah Pelanggan'
+    ]);
     }
 
     /**
@@ -39,7 +41,15 @@ class PelangganController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         $validated = $request->validate([
+        'nama_pelanggan' => 'required|string|max:255',
+        'alamat' => 'required|string',
+        'nomor_telepon' => 'required|string|max:20',
+    ]);
+
+    Pelanggan::create($validated);
+
+    return redirect()->route('pelanggan.index')->with('success', 'Data pelanggan berhasil ditambahkan!');
     }
 
     /**
