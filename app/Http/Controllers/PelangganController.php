@@ -57,7 +57,10 @@ class PelangganController extends Controller
      */
     public function show(Pelanggan $pelanggan)
     {
-        //
+         return view('pelanggan.show', [
+        'title' => 'Detail Pelanggan',
+        'pelanggan' => $pelanggan
+    ]);
     }
 
     /**
