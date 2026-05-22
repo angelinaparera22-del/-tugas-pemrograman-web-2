@@ -15,7 +15,7 @@ class SepatuController extends Controller
         
         return view('produk-sepatu.index',[
             'title' => 'Produk Sepatu', 
-            'sepatus' => Sepatu::all(),
+            'sepatus' => Sepatu::latest()->get(),
             
             ]);
 
@@ -81,7 +81,7 @@ class SepatuController extends Controller
      */
     public function update(Request $request, sepatu $sepatu)
     {
-        $validated = $request->validate([
+        $validated = $request->validate([ 
         'name' => 'required|max:255',
         'brand' => 'required|max:255',
         'size' => 'required|numeric',
@@ -93,7 +93,7 @@ class SepatuController extends Controller
         'brand.required' => 'Brand wajib diisi',
         'size.required' => 'Size wajib diisi',
         'price.required' => 'Price wajib diisi',
-        'stock.required' => 'Stock wajib diisi',
+        'stock.required' => 'Stock wajib diisi', 
     ]);
 
     $sepatu->update($validated);
