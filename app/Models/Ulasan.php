@@ -28,8 +28,6 @@ class Ulasan extends Model
     {
         return $this->belongsTo(Pelanggan::class);
     }
-
-   
     public function scopeFilter(Builder $query, array $filters)
     {
         $query

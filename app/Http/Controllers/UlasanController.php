@@ -81,16 +81,31 @@ class UlasanController extends Controller
      */
     public function edit(Ulasan $ulasan)
     {
-        //
+         return view('ulasan.edit', [
+        'title' => 'Edit Ulasan',
+        'ulasan' => $ulasan,
+    ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Ulasan $ulasan)
-    {
-        //
-    }
+{
+    $validated = $request->validate([
+        'pelanggan_id' => 'required|exists:pelanggans,id',
+        'nama_sepatu' => 'required|string|max:255',
+        'rating' => 'required|integer|min:1|max:5',
+        'komentar' => 'required|string',
+        'tanggal_ulasan' => 'required|date',
+        'status' => 'required|string',
+    ]);
+
+    $ulasan->update($validated);
+
+    return to_route('ulasan.index')->withSuccess('Ulasan berhasil diedit');
+}
+
 
     /**
      * Remove the specified resource from storage.
