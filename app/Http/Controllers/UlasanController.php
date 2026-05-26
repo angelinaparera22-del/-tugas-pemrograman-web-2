@@ -73,7 +73,11 @@ class UlasanController extends Controller
      */
     public function show(Ulasan $ulasan)
     {
-        //
+        return view('ulasan.show', [
+        'title' => 'Detail Ulasan',
+        'ulasan' => $ulasan,
+        'pelanggan' => $ulasan->pelanggan,
+    ]);
     }
 
     /**
