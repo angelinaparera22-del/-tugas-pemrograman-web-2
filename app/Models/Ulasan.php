@@ -4,18 +4,24 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Attributes\Fillable;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-#[Fillable(['pelanggan_id', 'isi_ulasan', 'rating'])]
 
 class Ulasan extends Model
 {
     use HasFactory;
 
-    // otomatis load relasi pelanggan
+    protected $fillable = [
+        'pelanggan_id',
+        'nama_sepatu',
+        'rating',
+        'komentar',
+        'tanggal_ulasan',
+        'status',
+    ];
+
     protected $with = ['pelanggan'];
 
     public function pelanggan(): BelongsTo
@@ -23,5 +29,18 @@ class Ulasan extends Model
         return $this->belongsTo(Pelanggan::class);
     }
 
-
+   
+    public function scopeFilter(Builder $query, array $filters)
+    {
+        $query
+            ->when($filters['keyword'] ?? false, function ($query, $keyword) {
+                return $query->where('isi_ulasan', 'like', '%' . $keyword . '%')
+                             ->orWhereHas('pelanggan', function ($q) use ($keyword) {
+                                 $q->where('nama_pelanggan', 'like', '%' . $keyword . '%');
+                             });
+            })
+            ->when($filters['pelanggan_id'] ?? false, function ($query, $pelangganId) {
+                return $query->where('pelanggan_id', $pelangganId);
+            });
+    }
 }

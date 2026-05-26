@@ -28,7 +28,7 @@
 
         <ul class="list-group">
             @foreach ($pelanggans as $pelanggan)
-                <li class="list-group-item fs-7">
+                <li class="list-group-item">
                     {{ $pelanggans->firstItem() + $loop->index }}.
                     {{ $pelanggan->nama_pelanggan }} --
                     {{ $pelanggan->alamat }} --

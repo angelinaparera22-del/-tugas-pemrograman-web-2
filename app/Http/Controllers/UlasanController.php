@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pelanggan;
 use App\Models\Ulasan;
 use Illuminate\Http\Request;
+use App\Models\Pelanggan;
 
 class UlasanController extends Controller
 {
@@ -13,24 +13,14 @@ class UlasanController extends Controller
      */
     public function index()
     {
-{
-    $keyword = request('keyword');
 
-    $ulasans = Ulasan::with('pelanggan')->latest();
+        $ulasans = Ulasan::latest()->filter(request(['keyword', 'pelanggan_id']));
 
-    if ($keyword) {
-        $ulasans->whereHas('pelanggan', function($query) use ($keyword) {
-            $query->where('nama_pelanggan', 'like', "%{$keyword}%");
-        })
-        ->orWhere('isi_ulasan', 'like', "%{$keyword}%");
-    }
-
-    return view('ulasan.index', [
-        'title' => 'Ulasan',
-        'ulasans' => $ulasans->paginate(5)->withQueryString(),
-    ]);
-}
-
+        return view('ulasan.index', [
+            'title' => 'Ulasan',
+            'pelanggans' => Pelanggan::latest()->get(),
+            'ulasans' => $ulasans->paginate(5)->withQueryString(),
+        ]);
     }
 
     /**
@@ -38,7 +28,10 @@ class UlasanController extends Controller
      */
     public function create()
     {
-        //
+        return view('ulasan.create', [
+            'title' => 'Tambah Ulasan',
+            'pelanggans' => Pelanggan::latest()->get(),
+        ]);
     }
 
     /**
@@ -46,7 +39,33 @@ class UlasanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'pelanggan_id'   => 'required|exists:pelanggans,id',
+            'nama_sepatu'    => 'required|max:255',
+            'rating'         => 'required|integer|min:1|max:5',
+            'komentar'       => 'nullable|string',
+            'tanggal_ulasan' => 'required|date',
+            'status'         => 'required|string',
+        ], [
+            'pelanggan_id.required' => 'Pelanggan tidak boleh kosong',
+            'pelanggan_id.exists'   => 'Pelanggan yang dipilih tidak ditemukan',
+
+            'nama_sepatu.required'  => 'Nama sepatu tidak boleh kosong',
+            'nama_sepatu.max'       => 'Nama sepatu tidak boleh lebih dari :max karakter',
+
+            'rating.required'       => 'Rating wajib diisi',
+            'rating.integer'        => 'Rating harus berupa angka',
+            'rating.min'            => 'Rating minimal :min',
+            'rating.max'            => 'Rating maksimal :max',
+
+            'tanggal_ulasan.required' => 'Tanggal ulasan wajib diisi',
+            'tanggal_ulasan.date'     => 'Tanggal ulasan harus berupa format tanggal',
+
+            'status.required'       => 'Status wajib diisi',
+        ]);
+        Ulasan::create($validated);
+
+        return to_route('ulasan.index')->withSuccess('Ulasan berhasil ditambahkan');
     }
 
     /**

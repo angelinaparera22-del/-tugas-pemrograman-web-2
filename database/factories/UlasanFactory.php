@@ -15,13 +15,15 @@ class UlasanFactory extends Factory
 
     public function definition(): array
     {
-        return [
-            'pelanggan_id'   => Pelanggan::inRandomOrder()->first()?->id ?? Pelanggan::factory(),
-            'nama_sepatu'    => $this->faker->word(),
-            'rating'         => $this->faker->numberBetween(1, 5),
-            'komentar'       => $this->faker->sentence(),
-            'tanggal_ulasan' => $this->faker->date(),
-            'status'         => $this->faker->randomElement(['pending', 'approved']),
-        ];
+{
+    return [
+        'pelanggan_id' => \App\Models\Pelanggan::inRandomOrder()->first()->id,
+        'nama_sepatu' => $this->faker->word(),
+        'rating' => $this->faker->numberBetween(1, 5),
+        'komentar' => $this->faker->sentence(),
+        'tanggal_ulasan' => $this->faker->date(),
+        'status' => $this->faker->randomElement(['pending', 'approved', 'rejected']),
+    ];
+}
     }
 }
