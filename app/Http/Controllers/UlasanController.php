@@ -112,6 +112,8 @@ class UlasanController extends Controller
      */
     public function destroy(Ulasan $ulasan)
     {
-        //
+        $ulasan->delete();
+
+        return to_route('ulasan.index')->withSuccess('Ulasan berhasil dihapus');
     }
 }
