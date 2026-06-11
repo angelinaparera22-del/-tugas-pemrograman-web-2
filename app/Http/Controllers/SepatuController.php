@@ -127,4 +127,9 @@ class SepatuController extends Controller
         'sepatus' => $sepatus
     ]);
 }
+ public function restore(sepatu $sepatu)
+    {
+        $sepatu->restore();
+        return redirect()->route('produk-sepatu.trash')->with('success', 'Data berhasil dikembalikan');
+    }
 }
