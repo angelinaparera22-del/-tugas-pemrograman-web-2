@@ -23,17 +23,19 @@
                 {{ $sepatu->stock }} --
                 {{ $sepatu->deskripsi ?? 'deskripsi' }} {{-- field baru --}}
                 </a>
-                <form action="{{ route('produk-sepatu.destroy', $sepatu) }}" method="POST" class="d-inline">
-                    @method('DELETE')
-                    @csrf
-                    <button type="submit" class="btn btn-danger"
-                        onclick="return confirm('ANDA YAKIN?')">Delete</button>
                 </form>
                 <form action="{{ route('produk-sepatu.restore', $sepatu) }}" method="POST" class="d-inline">
                     @method('PUT')
                     @csrf
                     <button type="submit" class="btn btn-warning btn-sm"
                         onclick="return confirm('ANDA YAKIN ingin mengembalikan data ini?')">Restore</button>
+                </form>
+                <form action="{{ route('produk-sepatu.force-delete', $sepatu) }}" method="POST" class="d-inline">
+                    @method('PUT')
+                    @csrf
+                    <button type="submit" class="btn btn-danger btn-sm"
+                        onclick="return confirm('ANDA YAKIN ingin menghapus data ini secara permanen?')">Force
+                        Delete</button>
                 </form>
             </li>
         @endforeach

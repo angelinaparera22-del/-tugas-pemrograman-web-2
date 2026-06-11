@@ -132,4 +132,12 @@ class SepatuController extends Controller
         $sepatu->restore();
         return redirect()->route('produk-sepatu.trash')->with('success', 'Data berhasil dikembalikan');
     }
+
+    public function forceDelete(sepatu $sepatu)
+    {
+        $sepatu->forceDelete();
+
+        return redirect()->route('produk-sepatu.trash')
+            ->with('success', 'Data berhasil dihapus permanen');
+    }
 }
