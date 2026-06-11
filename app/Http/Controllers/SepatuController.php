@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\sepatu;
 use Database\Factories\ProdukSepatuFactory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SepatuController extends Controller
 {
@@ -43,8 +44,8 @@ class SepatuController extends Controller
         'size' => 'required|numeric',
         'price' => 'required|numeric',
         'stock' => 'required|numeric',
+        'deskripsi' => 'nullable|string',
     ], [
-        
         'name.required' => 'Nama wajib diisi',
         'brand.required' => 'Brand wajib diisi',
         'size.required' => 'Size wajib diisi',
@@ -52,7 +53,9 @@ class SepatuController extends Controller
         'stock.required' => 'Stock wajib diisi',
     ]);
 
-    Sepatu::create($validated);
+    DB::transaction(function () use ($validated) {
+        Sepatu::create($validated);
+    });
 
     return redirect()->route('produk-sepatu.index')->with('success', 'Data berhasil ditambahkan');
 }
