@@ -16,8 +16,11 @@ class PelangganController extends Controller
     $pelanggans = Pelanggan::latest();
     $keyword = request('keyword');
     if($keyword) {
-        $pelanggans->where('nama_pelanggan', 'like', '%'. $keyword . '%');
+        $pelanggans->where('nama_pelanggan', 'like', '%'. $keyword . '%')
+        ->orWhere('alamat', 'like', '%' . $keyword . '%')
+        ->orWhere('ulasan', 'like', '%' . $keyword . '%');
     }
+    
 
         return view('pelanggan.index',[
             'title' => 'Pelanggan', 
@@ -96,8 +99,7 @@ class PelangganController extends Controller
      */
     public function destroy(Pelanggan $pelanggan)
     {
-         $pelanggan->delete();
-
-        return redirect()->route('pelanggan.index')->with('success', 'Data pelanggan berhasil dihapus!');
+        $pelanggan->delete($pelanggan);
+        return redirect()->route('pelanggan.index')->with('success', 'Pelanggan berhasil dihapus');
     }
 }

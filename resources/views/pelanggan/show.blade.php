@@ -16,12 +16,15 @@
     <ul class="list-group mb-3">
         @forelse($ulasans as $ulasan)
             <li class="list-group-item">
-                <strong>{{ $ulasan->nama_sepatu }}</strong>
-                (Rating: {{ $ulasan->rating }})
-                <br>
-                {{ $ulasan->komentar }}
-                <br>
-                <small>Tanggal: {{ \Carbon\Carbon::parse($ulasan->tanggal_ulasan)->format('d F Y') }}</small>
+                <div><strong>Nama Sepatu:</strong> {{ $ulasan->nama_sepatu }}</div>
+                <div><strong>Rating:</strong> {{ $ulasan->rating }}</div>
+                <div><strong>Komentar:</strong> {{ $ulasan->komentar }}</div>
+                <div><strong>Tanggal Ulasan:</strong>
+                    {{ \Carbon\Carbon::parse($ulasan->tanggal_ulasan)->format('d F Y') }}
+                </div>
+                <div><strong>Status:</strong> {{ $ulasan->status }}</div>
+                <div><strong>Dibuat:</strong> {{ $ulasan->created_at->format('d F Y H:i:s') }}</div>
+                <div><strong>Update Terakhir:</strong> {{ $ulasan->updated_at->diffForHumans() }}</div>
             </li>
         @empty
             <li class="list-group-item">Belum ada ulasan</li>

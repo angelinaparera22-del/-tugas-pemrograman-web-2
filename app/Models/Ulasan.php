@@ -13,18 +13,9 @@ class Ulasan extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'pelanggan_id',
-        'nama_sepatu',
-        'rating',
-        'komentar',
-        'tanggal_ulasan',
-        'status',
-    ];
+    protected $fillable = ['nama_sepatu','rating','komentar','tanggal_ulasan','status','pelanggan_id'];
 
-    protected $with = ['pelanggan'];
-
-    public function pelanggan(): BelongsTo
+    public function pelanggan()
     {
         return $this->belongsTo(Pelanggan::class);
     }

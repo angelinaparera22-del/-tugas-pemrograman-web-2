@@ -33,11 +33,13 @@
 
     <ul class="list-group list-group-sm">
         @foreach ($ulasans as $ulasan)
-            <li class="list-group-item py-2">
-                {{ $ulasans->firstItem() + $loop->index }}.
-                <strong>{{ $ulasan->pelanggan->nama_pelanggan }}</strong>
-                -- {{ $ulasan->isi_ulasan }}
-                -- Nama Sepatu: {{ $ulasan->nama_sepatu }}
+            <li class="list-group-item" style="font-size: 14px;">
+                {{ $ulasans->firstItem() + $loop->index }}. Nama Sepatu: {{ $ulasan->nama_sepatu }}
+                - {{ $ulasan->rating }}
+                - {{ $ulasan->komentar }}
+                - {{ $ulasan->tanggal_ulasan }}
+                - {{ $ulasan->status }}
+                - Pelanggan: {{ $ulasan->pelanggan->nama_pelanggan ?? '-' }}
 
                 <a class="btn btn-info btn-sm" href="{{ route('ulasan.show', $ulasan->id) }}">Detail</a>
                 <a class="btn btn-warning btn-sm" href="{{ route('ulasan.edit', $ulasan->id) }}">Edit</a>

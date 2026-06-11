@@ -5,16 +5,6 @@
         @csrf
 
         <div class="mb-3">
-            <label for="pelanggan_id" class="form-label">Pelanggan ID</label>
-            <input type="number" class="form-control @error('pelanggan_id') is-invalid @enderror" id="pelanggan_id"
-                name="pelanggan_id" value="{{ old('pelanggan_id') }}">
-            @error('pelanggan_id')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
-        </div>
-
-
-        <div class="mb-3">
             <label for="nama_sepatu" class="form-label">Nama Sepatu</label>
             <input type="text" class="form-control @error('nama_sepatu') is-invalid @enderror" id="nama_sepatu"
                 name="nama_sepatu" value="{{ old('nama_sepatu') }}">
@@ -54,6 +44,23 @@
             <input type="text" class="form-control @error('status') is-invalid @enderror" id="status"
                 name="status" value="{{ old('status') }}">
             @error('status')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="mb-3">
+            <label for="pelanggan_id" class="form-label">pelanggan</label>
+            <select class="form-select @error('pelanggan_id') is-invalid @enderror" id="pelanggan_id"
+                name="pelanggan_id" required>
+                <option value="">-- Pilih pelanggan --</option>
+                @foreach ($pelanggans as $pelanggan)
+                    <option value="{{ $pelanggan->id }}"
+                        {{ old('pelanggan_id') == $pelanggan->id ? 'selected' : '' }}>
+                        {{ $pelanggan->nama_pelanggan }}
+                    </option>
+                @endforeach
+            </select>
+            @error('pelanggan_id')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
         </div>

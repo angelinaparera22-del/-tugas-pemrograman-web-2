@@ -11,41 +11,50 @@ class UlasanController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
+ public function index()
+{
+    $ulasans = Ulasan::with('pelanggan')->latest(); // ambil ulasan + data pelanggan
 
-        $ulasans = Ulasan::latest()->filter(request(['keyword', 'pelanggan_id']));
-
-        return view('ulasan.index', [
-            'title' => 'Ulasan',
-            'pelanggans' => Pelanggan::latest()->get(),
-            'ulasans' => $ulasans->paginate(5)->withQueryString(),
-        ]);
+    $keyword = request('keyword');
+    if ($keyword) {
+        $ulasans->where(function($query) use ($keyword) {
+            $query->where('ulasan_number', 'like', '%'. $keyword . '%')
+                  ->orWhere('row', 'like', '%' . $keyword . '%')
+                  ->orWhere('type', 'like', '%' . $keyword . '%')
+                  ->orWhere('status', 'like', '%' . $keyword . '%')
+                  ->orWhere('price', 'like', '%' . $keyword . '%');
+        });
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    $pelanggan_id = request('pelanggan_id');
+    if ($pelanggan_id) {
+        $ulasans->where('pelanggan_id', $pelanggan_id);
+    }
+
+    return view('ulasan.index', [
+        'title' => 'Ulasan',
+        'pelanggans' => Pelanggan::latest()->get(),
+        'ulasans' => $ulasans->paginate(5)->withQueryString(),
+    ]);
+}
+
+
     public function create()
     {
-        return view('ulasan.create', [
-            'title' => 'Tambah Ulasan',
-            'pelanggans' => Pelanggan::latest()->get(),
-        ]);
+        return view('ulasan.create', ['title' => 'Create ulasan',  'pelanggans' => Pelanggan::all()]);
     }
-
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'pelanggan_id'   => 'required|exists:pelanggans,id',
             'nama_sepatu'    => 'required|max:255',
-            'rating'         => 'required|integer|min:1|max:5',
+            'rating'         => 'required|integer|min:1|max:50',
             'komentar'       => 'nullable|string',
             'tanggal_ulasan' => 'required|date',
             'status'         => 'required|string',
+            'pelanggan_id'   => 'required|exists:pelanggans,id',
         ], [
             'pelanggan_id.required' => 'Pelanggan tidak boleh kosong',
             'pelanggan_id.exists'   => 'Pelanggan yang dipilih tidak ditemukan',
@@ -99,7 +108,7 @@ class UlasanController extends Controller
     $validated = $request->validate([
         'pelanggan_id' => 'required|exists:pelanggans,id',
         'nama_sepatu' => 'required|string|max:255',
-        'rating' => 'required|integer|min:1|max:5',
+        'rating' => 'required|integer|min:1|max:50',
         'komentar' => 'required|string',
         'tanggal_ulasan' => 'required|date',
         'status' => 'required|string',

@@ -1,6 +1,5 @@
 <x-app>
     <x-slot:title>{{ $title }}</x-slot>
-    <x-slot:title> {{ $title }} </x-slot>
 
     @if (session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -26,28 +25,31 @@
             </div>
         </div>
 
-        <ul class="list-group">
-            @foreach ($pelanggans as $pelanggan)
-                <li class="list-group-item">
-                    {{ $pelanggans->firstItem() + $loop->index }}.
-                    {{ $pelanggan->nama_pelanggan }} --
-                    {{ $pelanggan->alamat }} --
-                    {{ $pelanggan->nomor_telepon }}
+    </form>
 
-                    <a class="btn btn-info btn-sm" href="{{ route('pelanggan.show', $pelanggan->id) }}"
-                        role="button">Detail</a>
-                    <a class="btn btn-warning btn-sm" href="{{ route('pelanggan.edit', $pelanggan->id) }}"
-                        role="button">Edit</a>
+    <ul class="list-group">
+        @foreach ($pelanggans as $pelanggan)
+            <li class="list-group-item">
+                {{ $pelanggans->firstItem() + $loop->index }}.
+                {{ $pelanggan->nama_pelanggan }} --
+                {{ $pelanggan->alamat }} --
+                {{ $pelanggan->nomor_telepon }}
 
-                    <form action="{{ route('pelanggan.destroy', $pelanggan->id) }}" method="POST" class="d-inline">
-                        @method('DELETE')
-                        @csrf
-                        <button type="submit" class="btn btn-danger btn-sm"
-                            onclick="return confirm('Anda Yakin?')">Delete</button>
-                    </form>
-                </li>
-            @endforeach
-        </ul>
+                <a class="btn btn-info btn-sm" href="{{ route('pelanggan.show', $pelanggan->id) }}"
+                    role="button">Detail</a>
+                <a class="btn btn-warning btn-sm" href="{{ route('pelanggan.edit', $pelanggan->id) }}"
+                    role="button">Edit</a>
 
-        {{ $pelanggans->links() }}
+                <form action="{{ route('pelanggan.destroy', $pelanggan->id) }}" method="POST" class="d-inline">
+                    @method('DELETE')
+                    @csrf
+                    <button type="submit" class="btn btn-danger btn-sm"
+                        onclick="return confirm('Anda yakin ingin menghapus pelanggan ini?')">Delete</button>
+                </form>
+
+            </li>
+        @endforeach
+    </ul>
+
+    {{ $pelanggans->links() }}
 </x-app>

@@ -68,6 +68,7 @@ class SepatuController extends Controller
      */
     public function edit(sepatu $sepatu)
     {
+
        return view('produk-sepatu.edit',[
             'title' => 'Edit produk', 
             'sepatu' => $sepatu
