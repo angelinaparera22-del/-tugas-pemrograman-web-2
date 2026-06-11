@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('sepatus', function (Blueprint $table) {
-            $table->text('deskripsi')->nullable(); // field baru
-            $table->softDeletes();                 // dukungan soft deletes
+            $table->string('deskripsi')->nullable()->after('stock'); // ganti stok sesuai nama kolom
+            $table->softDeletes();
         });
     }
 
@@ -23,8 +23,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('sepatus', function (Blueprint $table) {
-            $table->dropColumn('deskripsi');       // rollback field baru
-            $table->dropSoftDeletes();             // rollback soft deletes
+            $table->dropColumn('deskripsi');
+            $table->dropSoftDeletes();
         });
     }
 };

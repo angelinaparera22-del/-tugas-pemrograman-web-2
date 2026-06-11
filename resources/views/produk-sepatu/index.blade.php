@@ -20,7 +20,8 @@
                 {{ $sepatu->brand }} --
                 {{ $sepatu->size }} --
                 {{ $sepatu->price }} --
-                {{ $sepatu->stock }}
+                {{ $sepatu->stock }} --
+                {{ $sepatu->deskripsi ?? 'deskripsi' }} {{-- field baru --}}
                 <a href="{{ route('produk-sepatu.edit', $sepatu) }}" class="btn btn-warning">
                     Edit
                 </a>

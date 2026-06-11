@@ -55,7 +55,6 @@
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
         </div>
-
         <a href="{{ route('produk-sepatu.index') }}" class="btn btn-warning">Cancel</a>
         <button type="submit" class="btn btn-primary">Update</button>
 

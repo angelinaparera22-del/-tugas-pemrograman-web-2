@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\sepatu;
+use Database\Factories\ProdukSepatuFactory;
 use Illuminate\Http\Request;
 
 class SepatuController extends Controller
@@ -13,11 +14,12 @@ class SepatuController extends Controller
     public function index()
     {
         
-        return view('produk-sepatu.index',[
-            'title' => 'Produk Sepatu', 
-            'sepatus' => Sepatu::latest()->get(),
-            
-            ]);
+       $sepatu = Sepatu::all();
+
+        return view('produk-sepatu.index', [
+            'title' => 'Data Produk Sepatu',
+            'sepatus' => $sepatu,
+        ]);
 
     }
 
