@@ -55,6 +55,15 @@
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
         </div>
+
+        <div class="mb-3">
+            <label>Deskripsi</label>
+            <input type="text" name="deskripsi" class="form-control @error('deskripsi') is-invalid @enderror"
+                value="{{ old('deskripsi', $sepatu->deskripsi) }}">
+            @error('deskripsi')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
         <a href="{{ route('produk-sepatu.index') }}" class="btn btn-warning">Cancel</a>
         <button type="submit" class="btn btn-primary">Update</button>
 

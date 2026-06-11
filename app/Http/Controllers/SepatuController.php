@@ -87,24 +87,26 @@ class SepatuController extends Controller
      */
     public function update(Request $request, sepatu $sepatu)
     {
-        $validated = $request->validate([ 
+        $validated = $request->validate([
         'name' => 'required|max:255',
         'brand' => 'required|max:255',
         'size' => 'required|numeric',
         'price' => 'required|numeric',
         'stock' => 'required|numeric',
+        'deskripsi' => 'nullable|string',
     ], [
-        
         'name.required' => 'Nama wajib diisi',
         'brand.required' => 'Brand wajib diisi',
         'size.required' => 'Size wajib diisi',
         'price.required' => 'Price wajib diisi',
-        'stock.required' => 'Stock wajib diisi', 
+        'stock.required' => 'Stock wajib diisi',
     ]);
 
-    $sepatu->update($validated);
+    DB::transaction(function () use ($sepatu, $validated) {
+        $sepatu->update($validated);
+    });
 
-    return redirect()->route('produk-sepatu.index')->with('success', 'Data berhasil diubah');
+    return redirect()->route('produk-sepatu.index')->with('success', 'Data berhasil diupdate');
     }
 
     /**
