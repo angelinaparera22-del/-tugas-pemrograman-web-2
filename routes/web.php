@@ -15,5 +15,9 @@ Route::get('/produk-sepatu/{sepatu}/edit', [SepatuController::class, 'edit'])->n
 Route::put('/produk-sepatu/{sepatu}', [SepatuController::class, 'update'])->name('produk-sepatu.update');
 Route::delete('/produk-sepatu/{sepatu}', [SepatuController::class, 'destroy'])->name('produk-sepatu.destroy'); 
 
+// soft deletes
+Route::get('/produk-sepatu/trash', [SepatuController::class, 'trash'])->name('produk-sepatu.trash');
+
 Route::resource('pelanggan', PelangganController::class);
 Route::resource('ulasan', UlasanController::class);
+

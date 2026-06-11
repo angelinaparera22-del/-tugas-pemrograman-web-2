@@ -117,4 +117,14 @@ class SepatuController extends Controller
         $sepatu->delete($sepatu);
         return redirect()->route('produk-sepatu.index')->with('success', 'Data berhasil dihapus');
     }
+
+    // soft deletes
+    public function trash()
+{
+    $sepatus = Sepatu::onlyTrashed()->get();
+    return view('produk-sepatu.trash', [
+        'title' => 'Trash Produk Sepatu',
+        'sepatus' => $sepatus
+    ]);
+}
 }

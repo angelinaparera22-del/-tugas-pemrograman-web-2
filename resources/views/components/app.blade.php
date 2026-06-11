@@ -23,6 +23,7 @@
                     <a class="nav-link active" href="{{ route('produk-sepatu.index') }}">Produk Sepatu</a>
                     <a class="nav-link active" href="{{ route('pelanggan.index') }}">Pelanggan</a>
                     <a class="nav-link active" href="{{ route('ulasan.index') }}">Ulasan</a>
+                    <a class="nav-link active" href="{{ route('produk-sepatu.trash') }}">Trash</a>
                 </div>
             </div>
         </div>
